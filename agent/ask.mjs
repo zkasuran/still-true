@@ -60,7 +60,7 @@ async function chat(messages, attempts = 6) {
     const res = await fetch(`${BASE}/chat/completions`, {
       method: 'POST',
       headers: {Authorization: `Bearer ${KEY}`, 'Content-Type': 'application/json'},
-      body: JSON.stringify({model: MODEL, messages, tools, tool_choice: 'auto', max_tokens: 2048}),
+      body: JSON.stringify({model: MODEL, messages, tools, tool_choice: 'auto', max_tokens: 8192}),
     })
     if (res.ok) return (await res.json()).choices[0].message
     const body = await res.text()
@@ -80,7 +80,10 @@ async function ask(question) {
     const msg = await chat(messages)
     messages.push(msg)
     const calls = msg.tool_calls || []
-    if (calls.length === 0) return msg.content || '(no answer)'
+    if (calls.length === 0)
+      return String(msg.content || '')
+        .replace(/<think>[\s\S]*?<\/think>/gi, '')
+        .trim() || '(no answer)'
     for (const call of calls) {
       let content
       try {

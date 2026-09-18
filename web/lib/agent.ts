@@ -59,7 +59,7 @@ async function chat(messages: any[], attempts = 6): Promise<any> {
     const res = await fetch(`${BASE}/chat/completions`, {
       method: 'POST',
       headers: {Authorization: `Bearer ${key}`, 'Content-Type': 'application/json'},
-      body: JSON.stringify({model: MODEL, messages, tools, tool_choice: 'auto', max_tokens: 2048}),
+      body: JSON.stringify({model: MODEL, messages, tools, tool_choice: 'auto', max_tokens: 8192}),
     })
     if (res.ok) return (await res.json()).choices[0].message
     const body = await res.text()
@@ -85,7 +85,10 @@ export async function ask(question: string): Promise<AgentResult> {
     messages.push(msg)
     const calls = msg.tool_calls || []
     if (calls.length === 0) {
-      return {answer: msg.content || '(no answer)', readPaths: [...readPaths], checkedConflicts}
+      const clean = String(msg.content || '')
+        .replace(/<think>[\s\S]*?<\/think>/gi, '')
+        .trim()
+      return {answer: clean || '(no answer)', readPaths: [...readPaths], checkedConflicts}
     }
     for (const call of calls) {
       let content: string
