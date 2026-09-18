@@ -1,4 +1,5 @@
 import {createClient} from '@sanity/client'
+import {readFileSync} from 'node:fs'
 
 // Reads a Sanity Context Knowledge Base through the official client. The KB is
 // built from source documents that Sanity Context distils into cited entries and,
@@ -6,11 +7,18 @@ import {createClient} from '@sanity/client'
 const PROJECT = process.env.SANITY_PROJECT_ID || 'mx12urdz'
 const ORG = process.env.SANITY_ORG_ID || 'oul432e18'
 const KB = process.env.SANITY_KB_ID || 'kbOSaaWFy5yI'
-const token = process.env.SANITY_ORGANIZATION_TOKEN
 
-if (!token) {
-  throw new Error('SANITY_ORGANIZATION_TOKEN is required (org token with Context Viewer access)')
+// A token with Context read access. In production set SANITY_ORGANIZATION_TOKEN (a scoped org token
+// with Context Viewer). For local dev we fall back to the logged-in CLI token if the env var is unset.
+function resolveToken() {
+  if (process.env.SANITY_ORGANIZATION_TOKEN) return process.env.SANITY_ORGANIZATION_TOKEN
+  try {
+    const cfg = JSON.parse(readFileSync(`${process.env.HOME}/.config/sanity/config.json`, 'utf8'))
+    if (cfg.authToken) return cfg.authToken
+  } catch {}
+  throw new Error('No Sanity token: set SANITY_ORGANIZATION_TOKEN or run `sanity login`')
 }
+const token = resolveToken()
 
 const ctx = createClient({
   projectId: PROJECT,
