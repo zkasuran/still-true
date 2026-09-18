@@ -1,0 +1,28 @@
+# deps + build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+.next/
+**/.next/
+out/
+**/out/
+.sanity/
+**/.sanity/
+
+# env + secrets (never commit)
+.env
+.env.*
+!.env.example
+
+# private form-fill / submission tooling (house rule: never pushed)
+/submit/
+**/submit/
+
+# render outputs
+DEMO-*.mp4
+upload-*/
+
+# os / editor
+.DS_Store
+*.log
