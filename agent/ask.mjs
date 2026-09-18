@@ -3,7 +3,7 @@ import {getOutline, readEntries, getConflicts} from './context.mjs'
 // LLM config: any OpenAI-compatible chat-completions gateway.
 const BASE = (process.env.LLM_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '')
 const KEY = process.env.LLM_API_KEY
-const MODEL = process.env.LLM_MODEL || 'gpt-5.6-sol'
+const MODEL = process.env.LLM_MODEL || 'MiniMax-M3'
 if (!KEY) throw new Error('LLM_API_KEY is required')
 
 const tools = [

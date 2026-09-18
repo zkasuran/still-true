@@ -1,7 +1,7 @@
 import {getOutline, readEntries, getConflicts} from './context'
 
 const BASE = (process.env.LLM_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '')
-const MODEL = process.env.LLM_MODEL || 'gpt-5.6-sol'
+const MODEL = process.env.LLM_MODEL || 'MiniMax-M3'
 
 const tools = [
   {
