@@ -19,6 +19,9 @@ out/
 /submit/
 **/submit/
 
+# publish content pages (house rule: never ship to a public repo)
+CONTENT-*.html
+
 # render outputs
 DEMO-*.mp4
 upload-*/
