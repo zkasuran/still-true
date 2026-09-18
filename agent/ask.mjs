@@ -50,7 +50,7 @@ const system = `You answer developer questions about the Claude API strictly fro
 
 Rules:
 - Ground every answer in entries you have read. Do not answer from your own memory. If the base does not cover it, say so.
-- Call list_knowledge first, then read_entries for the relevant paths.
+- Call list_knowledge first. The base is small, so then read_entries with EVERY outline path in one call. Do not answer after reading only one or two entries.
 - Always check list_conflicts. If a conflict touches the question, surface BOTH claims with their sources, say which one is current and why (recency and source authority), and never silently pick one.
 - Keep the answer short and cite the entry paths you used.`
 

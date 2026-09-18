@@ -69,6 +69,13 @@ export default async function Home() {
 
   return (
     <main className="mx-auto min-h-screen max-w-3xl px-6 py-16">
+      <nav className="mb-10 flex gap-6 text-sm text-zinc-400">
+        <span className="text-white">Board</span>
+        <a href="/ask" className="hover:text-white">
+          Ask
+        </a>
+      </nav>
+
       <header className="mb-12">
         <h1 className="text-3xl font-semibold tracking-tight text-white">Still True?</h1>
         <p className="mt-3 max-w-prose text-zinc-400">
