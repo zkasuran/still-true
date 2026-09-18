@@ -16,6 +16,26 @@ export default function AskPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [result, setResult] = useState<Answer | null>(null)
+  const [speaking, setSpeaking] = useState(false)
+
+  async function speak(text: string) {
+    setSpeaking(true)
+    try {
+      const res = await fetch('/api/speak', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({text}),
+      })
+      if (!res.ok) throw new Error('speak failed')
+      const blob = await res.blob()
+      const audio = new Audio(URL.createObjectURL(blob))
+      audio.onended = () => setSpeaking(false)
+      audio.onerror = () => setSpeaking(false)
+      await audio.play()
+    } catch {
+      setSpeaking(false)
+    }
+  }
 
   async function run(question: string) {
     setLoading(true)
@@ -115,6 +135,14 @@ export default function AskPage() {
             {result.answer}
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
+            <button
+              onClick={() => speak(result.answer)}
+              disabled={speaking}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.03] px-2.5 py-1 text-zinc-300 transition-colors hover:border-white/[0.2] hover:text-white disabled:opacity-50"
+            >
+              <span aria-hidden>{speaking ? '♪' : '▶'}</span>
+              {speaking ? 'Playing…' : 'Listen'}
+            </button>
             {result.checkedConflicts ? (
               <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-amber-300 ring-1 ring-inset ring-amber-500/25">
                 checked for conflicts
