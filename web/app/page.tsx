@@ -141,6 +141,22 @@ export default async function Home() {
         </p>
       </section>
 
+      <section className="relative mb-14 aspect-[21/9] overflow-hidden rounded-2xl border border-white/[0.08]">
+        <video
+          src="/hero.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent" />
+        <span className="absolute bottom-3 right-3 rounded-full bg-black/40 px-2.5 py-1 text-[10px] uppercase tracking-wider text-zinc-300 backdrop-blur">
+          Generated with MiniMax
+        </span>
+      </section>
+
       <section className="mb-16 grid grid-cols-3 gap-4">
         <Stat n={claims.length} label="claims" accent="text-zinc-100" />
         <Stat n={topics.size} label="topics" accent="text-sky-300" />
