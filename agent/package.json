@@ -1,0 +1,14 @@
+{
+  "name": "still-true-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An agent that answers from a Sanity Context Knowledge Base and refuses to give a stale or contradicted answer.",
+  "scripts": {
+    "ask": "node ask.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0",
+    "@sanity/client": "^8.6.2"
+  }
+}
