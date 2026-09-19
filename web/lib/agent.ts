@@ -36,7 +36,7 @@ const tools = [
   },
 ]
 
-const system = `You answer developer questions about the Claude API strictly from a Sanity Context Knowledge Base.
+const system = `You answer developer questions about Next.js strictly from a Sanity Context Knowledge Base.
 
 Rules:
 - Ground every answer in entries you have read. Do not answer from memory. If the base does not cover it, say so.
