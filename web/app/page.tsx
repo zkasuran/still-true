@@ -91,8 +91,8 @@ export default async function Home() {
           </span>
         </h1>
         <p className="mx-auto mt-5 max-w-xl text-balance text-[15px] leading-relaxed text-zinc-400">
-          Ask about the Claude API. The agent answers only from a knowledge base of cited claims, tells
-          you which fact is current, and shows both sides when two sources disagree. Try it live.
+          Ask about Next.js. The agent answers only from a knowledge base of cited claims, tells you
+          which fact is current, and shows both sides when two sources disagree. Try it live.
         </p>
       </section>
 

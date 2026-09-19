@@ -3,20 +3,20 @@
 import {useEffect, useRef, useState} from 'react'
 
 const SUGGESTIONS = [
-  'How do I turn on extended thinking for Opus 5?',
-  'What should max_tokens be? Do sources agree?',
-  'Current web search tool type?',
-  'Can I prefill the assistant on Opus 5?',
+  'Does Next.js cache fetch by default?',
+  'App Router or Pages Router?',
+  'Are route params async now?',
+  'Where do I import fonts from?',
 ]
 
 type Answer = {answer: string; readPaths: string[]; checkedConflicts: boolean}
 
 const SAMPLE: {q: string; a: Answer} = {
-  q: 'What should I set max_tokens to by default? Do the sources agree?',
+  q: 'Does Next.js cache fetch by default?',
   a: {
     answer:
-      'Set max_tokens to about 16000 for a non-streaming request. The sources do not agree: the official Anthropic guidance says ~16000, while a community tutorial says 1024. The official source wins on authority, so 1024 is the wrong default. Only go lower for a deliberate reason: classification, a strict cost cap, or a known-short output.',
-    readPaths: ['api_parameters'],
+      'In the Next.js App Router, fetch is not cached by default. The sources disagree: the official docs say it is not cached, so you opt in with cache: "force-cache", while a popular tutorial says it is cached by default and you opt out with no-store. The official source wins, so treat fetch as uncached unless you deliberately opt in.',
+    readPaths: ['fetch_caching'],
     checkedConflicts: true,
   },
 }
@@ -178,7 +178,7 @@ export default function AgentDemo({autofocus = false}: {autofocus?: boolean}) {
               }}
               onFocus={() => setIsSample(false)}
               rows={1}
-              placeholder="Ask about the Claude API…"
+              placeholder="Ask about Next.js…"
               className="max-h-32 min-h-[2.25rem] w-full resize-none bg-transparent px-2 py-1.5 text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none"
             />
             <button
