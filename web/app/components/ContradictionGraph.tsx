@@ -2,6 +2,7 @@
 
 import {useMemo, useState} from 'react'
 import type {Claim, Edge} from '@/lib/sanity'
+import {sfx} from '../lib/sound'
 
 const EDGE_COLOR: Record<Edge['relation'], string> = {
   contradicts: '#fbbf24',
@@ -95,7 +96,10 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
                 key={c._id}
                 className="cursor-pointer"
                 opacity={dim ? 0.3 : 1}
-                onMouseEnter={() => setActive(c._id)}
+                onMouseEnter={() => {
+                  setActive(c._id)
+                  sfx.tick()
+                }}
                 onClick={() => setActive(isActive ? null : c._id)}
               >
                 <circle cx={p.x} cy={p.y} r={isActive ? 8 : 5.5} fill={isActive ? '#34d399' : '#a1a1aa'} />

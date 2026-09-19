@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useRef, useState} from 'react'
+import {sfx} from '../lib/sound'
 
 const SUGGESTIONS = [
   'Does Next.js cache fetch by default?',
@@ -50,6 +51,7 @@ export default function AgentDemo({autofocus = false}: {autofocus?: boolean}) {
   }, [result, isSample])
 
   async function run(question: string) {
+    sfx.send()
     setLoading(true)
     setError('')
     setResult(null)
@@ -65,6 +67,8 @@ export default function AgentDemo({autofocus = false}: {autofocus?: boolean}) {
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'request failed')
       setResult(data)
+      if (data.checkedConflicts) sfx.alert()
+      else sfx.chime()
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : 'request failed')
     } finally {

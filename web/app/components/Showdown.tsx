@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react'
+import {sfx} from '../lib/sound'
 
 const SUGGESTIONS = [
   'Does Next.js cache fetch by default?',
@@ -22,6 +23,7 @@ export default function Showdown() {
 
   async function run(question: string) {
     if (!question.trim()) return
+    sfx.send()
     setRan(true)
     setQ(question)
     setNaive(null)
@@ -45,7 +47,12 @@ export default function Showdown() {
       body: JSON.stringify({question}),
     })
       .then((r) => r.json())
-      .then((d) => setGrounded(d.error ? {answer: d.error, readPaths: [], checkedConflicts: false} : d))
+      .then((d) => {
+        const g = d.error ? {answer: d.error, readPaths: [], checkedConflicts: false} : d
+        setGrounded(g)
+        if (g.checkedConflicts) sfx.alert()
+        else sfx.chime()
+      })
       .catch(() => setGrounded({answer: 'the agent call failed', readPaths: [], checkedConflicts: false}))
       .finally(() => setLoadingG(false))
   }

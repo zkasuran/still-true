@@ -1,7 +1,8 @@
 'use client'
 
-import {useMemo, useState} from 'react'
+import {useMemo, useRef, useState} from 'react'
 import type {Claim} from '@/lib/sanity'
+import {sfx} from '../lib/sound'
 
 function ts(d?: string) {
   return d ? Date.parse(d) : 0
@@ -16,6 +17,7 @@ export default function Timeline({claims}: {claims: Claim[]}) {
   const min = useMemo(() => Math.min(...dated.map((c) => ts(c.currentAsOf))), [dated])
   const max = useMemo(() => Math.max(...dated.map((c) => ts(c.currentAsOf))), [dated])
   const [v, setV] = useState(1000) // 0..1000, start at "now"
+  const lastStep = useRef(-1)
 
   const at = min + ((max - min) * v) / 1000
 
@@ -41,7 +43,15 @@ export default function Timeline({claims}: {claims: Claim[]}) {
         min={0}
         max={1000}
         value={v}
-        onChange={(e) => setV(Number(e.target.value))}
+        onChange={(e) => {
+          const nv = Number(e.target.value)
+          setV(nv)
+          const step = Math.round(nv / 40)
+          if (step !== lastStep.current) {
+            lastStep.current = step
+            sfx.tick()
+          }
+        }}
         className="w-full accent-emerald-400"
         aria-label="Scrub through time"
       />

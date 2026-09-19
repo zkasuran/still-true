@@ -2,6 +2,7 @@ import type {Metadata} from 'next'
 import {Geist, Geist_Mono} from 'next/font/google'
 import './globals.css'
 import ThemeToggle from './components/ThemeToggle'
+import SoundToggle from './components/SoundToggle'
 
 const geistSans = Geist({variable: '--font-geist-sans', subsets: ['latin']})
 const geistMono = Geist_Mono({variable: '--font-geist-mono', subsets: ['latin']})
@@ -37,6 +38,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
               <a href="/ask" className="rounded-md px-3 py-1.5 text-zinc-500 transition-colors hover:bg-black/[0.04] hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.04] dark:hover:text-zinc-100">
                 Ask
               </a>
+              <SoundToggle />
               <ThemeToggle />
             </nav>
           </div>
