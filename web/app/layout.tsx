@@ -7,7 +7,7 @@ const geistSans = Geist({variable: '--font-geist-sans', subsets: ['latin']})
 const geistMono = Geist_Mono({variable: '--font-geist-mono', subsets: ['latin']})
 
 export const metadata: Metadata = {
-  title: 'Still True? — a knowledge base that keeps itself honest',
+  title: 'Still True? A knowledge base that keeps itself honest',
   description:
     'A Next.js knowledge base that tells you which fact is current and shows both sides when two sources disagree. A grounded agent (MiniMax-M3) and a contradiction board over one Sanity Context graph.',
 }
