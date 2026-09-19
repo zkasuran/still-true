@@ -120,7 +120,7 @@ export default function Showdown() {
           </div>
           {!ran ? (
             <p className="text-sm leading-relaxed text-zinc-600">
-              What the model says on its own, from training data. Confident, uncited, and it does not
+              What the model says on its own, from training data. Confident and uncited. It does not
               know when it is out of date.
             </p>
           ) : loadingN ? (
@@ -145,7 +145,7 @@ export default function Showdown() {
           {!ran ? (
             <p className="text-sm leading-relaxed text-zinc-500">
               The same question, answered only from cited claims. It gives the current fact, flags where
-              sources disagree, and shows its receipts.
+              sources disagree and shows its receipts.
             </p>
           ) : loadingG ? (
             <Skeleton grounded />

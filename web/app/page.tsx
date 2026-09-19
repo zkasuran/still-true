@@ -90,7 +90,7 @@ export default async function Home() {
       <section className="mb-20">
         <SectionHead
           eyebrow="The map"
-          title="What is contested, and what replaced what"
+          title="What is contested and what replaced what"
           sub="Every claim is a node. Amber links are live contradictions, dashed blue links are one fact superseding an older one. Hover a node to trace it."
         />
         <ContradictionGraph claims={claims} edges={edges} />
