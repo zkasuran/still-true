@@ -1,31 +1,76 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --bg: #fbfbfd;
+  --fg: #18181b;
+  --t1: #18181b;
+  --t2: #52525b;
+  --t3: #71717a;
+  --t4: #a1a1aa;
+  --s0: rgba(0, 0, 0, 0.02);
+  --s1: rgba(0, 0, 0, 0.035);
+  --s2: rgba(0, 0, 0, 0.06);
+  --inset: rgba(0, 0, 0, 0.03);
+  --b1: rgba(0, 0, 0, 0.1);
+  --b2: rgba(0, 0, 0, 0.16);
+  --accent-emerald: #047857;
+  --accent-amber: #b45309;
+  --accent-sky: #0369a1;
+  --glow-teal: rgba(16, 185, 129, 0.1);
+  --glow-amber: rgba(217, 119, 6, 0.06);
+}
+
+.dark {
+  --bg: #09090b;
+  --fg: #e4e4e7;
+  --t1: #f4f4f5;
+  --t2: #a1a1aa;
+  --t3: #71717a;
+  --t4: #52525b;
+  --s0: rgba(255, 255, 255, 0.015);
+  --s1: rgba(255, 255, 255, 0.03);
+  --s2: rgba(255, 255, 255, 0.06);
+  --inset: rgba(0, 0, 0, 0.25);
+  --b1: rgba(255, 255, 255, 0.08);
+  --b2: rgba(255, 255, 255, 0.13);
+  --accent-emerald: #6ee7b7;
+  --accent-amber: #fcd34d;
+  --accent-sky: #7dd3fc;
+  --glow-teal: rgba(45, 212, 191, 0.1);
+  --glow-amber: rgba(251, 191, 36, 0.06);
+}
+
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background-color: #09090b;
-  color: #e4e4e7;
+  background-color: var(--bg);
+  color: var(--fg);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   background-image:
-    radial-gradient(55rem 34rem at 50% -12rem, rgba(45, 212, 191, 0.10), transparent 62%),
-    radial-gradient(48rem 28rem at 92% 2%, rgba(251, 191, 36, 0.06), transparent 55%);
+    radial-gradient(55rem 34rem at 50% -12rem, var(--glow-teal), transparent 62%),
+    radial-gradient(48rem 28rem at 92% 2%, var(--glow-amber), transparent 55%);
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
 
 ::selection {
   background: rgba(45, 212, 191, 0.28);
-  color: #f4f4f5;
+  color: inherit;
 }
 
 *::-webkit-scrollbar {
@@ -33,7 +78,8 @@ body {
   height: 10px;
 }
 *::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: rgba(128, 128, 128, 0.35);
   border-radius: 9999px;
-  border: 2px solid #09090b;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }

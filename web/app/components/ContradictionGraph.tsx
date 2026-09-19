@@ -59,7 +59,7 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
 
   return (
     <div>
-      <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]">
+      <div className="overflow-hidden rounded-2xl border border-[var(--b1)] bg-[var(--s1)]">
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Contradiction graph">
           {/* edges */}
           {edges.map((e, i) => {
@@ -104,7 +104,7 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
                   x={p.x + (right ? 12 : -12)}
                   y={p.y + 4}
                   textAnchor={right ? 'start' : 'end'}
-                  className="fill-zinc-300 text-[11px]"
+                  className="fill-[var(--t2)] text-[11px]"
                   style={{fontSize: 11}}
                 >
                   {shortLabel(c.statement)}
@@ -116,7 +116,7 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
       </div>
 
       {/* legend + detail */}
-      <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-zinc-500">
+      <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-[var(--t3)]">
         {(['contradicts', 'supersedes', 'supports'] as const).map((k) => (
           <span key={k} className="inline-flex items-center gap-1.5">
             <span className="h-2 w-4 rounded-full" style={{background: EDGE_COLOR[k]}} />
@@ -127,21 +127,21 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
       </div>
 
       {activeClaim ? (
-        <div className="mt-4 rounded-xl border border-white/[0.1] bg-white/[0.03] p-4">
-          <p className="text-sm text-zinc-100">{activeClaim.statement}</p>
-          <div className="mt-2 text-xs text-zinc-500">
+        <div className="mt-4 rounded-xl border border-[var(--b2)] bg-[var(--s1)] p-4">
+          <p className="text-sm text-[var(--t1)]">{activeClaim.statement}</p>
+          <div className="mt-2 text-xs text-[var(--t3)]">
             {activeClaim.topic} · {activeClaim.source?.authority ?? 'unknown'} source
           </div>
           {activeEdges.length ? (
-            <div className="mt-3 space-y-2 border-t border-white/[0.06] pt-3">
+            <div className="mt-3 space-y-2 border-t border-[var(--b1)] pt-3">
               {activeEdges.map((e, i) => {
                 const other = e.from?._id === active ? e.to : e.from
                 const dir = e.from?._id === active ? EDGE_LABEL[e.relation] : `is ${e.relation} by`
                 return (
                   <div key={i} className="text-xs">
                     <span style={{color: EDGE_COLOR[e.relation]}}>{dir}</span>{' '}
-                    <span className="text-zinc-400">{other?.statement}</span>
-                    {e.reason ? <div className="mt-0.5 text-zinc-600">{e.reason}</div> : null}
+                    <span className="text-[var(--t2)]">{other?.statement}</span>
+                    {e.reason ? <div className="mt-0.5 text-[var(--t4)]">{e.reason}</div> : null}
                   </div>
                 )
               })}

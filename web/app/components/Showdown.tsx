@@ -69,25 +69,25 @@ export default function Showdown() {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.1] bg-gradient-to-b from-white/[0.05] to-white/[0.02] shadow-2xl shadow-black/40">
+    <div className="overflow-hidden rounded-2xl border border-[var(--b2)] bg-gradient-to-b from-[var(--s2)] to-[var(--s1)] shadow-2xl shadow-black/40">
       <form
-        className="border-b border-white/[0.07] p-4"
+        className="border-b border-[var(--b1)] p-4"
         onSubmit={(e) => {
           e.preventDefault()
           run(q)
         }}
       >
-        <div className="flex items-end gap-2 rounded-xl border border-white/[0.1] bg-black/20 p-2 focus-within:border-emerald-400/40">
+        <div className="flex items-end gap-2 rounded-xl border border-[var(--b2)] bg-[var(--inset)] p-2 focus-within:border-emerald-400/40">
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Ask a Next.js question…"
-            className="w-full bg-transparent px-2 py-1.5 text-[15px] text-zinc-100 placeholder:text-zinc-600 focus:outline-none"
+            className="w-full bg-transparent px-2 py-1.5 text-[15px] text-[var(--t1)] placeholder:text-[var(--t4)] focus:outline-none"
           />
           <button
             type="submit"
             disabled={loadingN || loadingG}
-            className="shrink-0 rounded-lg bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-opacity hover:opacity-90 disabled:opacity-40"
+            className="shrink-0 rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40 dark:bg-white dark:text-zinc-900"
           >
             {loadingN || loadingG ? 'Running…' : ran ? 'Run again' : 'Run the showdown'}
           </button>
@@ -99,7 +99,7 @@ export default function Showdown() {
                 key={s}
                 type="button"
                 onClick={() => run(s)}
-                className="rounded-full border border-white/[0.08] bg-white/[0.02] px-3 py-1.5 text-xs text-zinc-400 transition-colors hover:border-emerald-400/30 hover:text-zinc-200"
+                className="rounded-full border border-[var(--b1)] bg-[var(--s1)] px-3 py-1.5 text-xs text-[var(--t2)] transition-colors hover:border-emerald-400/30 hover:text-[var(--t2)]"
               >
                 {s}
               </button>
@@ -108,28 +108,28 @@ export default function Showdown() {
         ) : null}
       </form>
 
-      <div className="grid grid-cols-1 divide-y divide-white/[0.07] md:grid-cols-2 md:divide-x md:divide-y-0">
+      <div className="grid grid-cols-1 divide-y divide-[var(--b1)] md:grid-cols-2 md:divide-x md:divide-y-0">
         {/* Ungrounded */}
         <div className="p-5">
           <div className="mb-3 flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-zinc-500" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[var(--t2)]">
               Plain model
             </span>
-            <span className="text-xs text-zinc-600">no sources</span>
+            <span className="text-xs text-[var(--t4)]">no sources</span>
           </div>
           {!ran ? (
-            <p className="text-sm leading-relaxed text-zinc-600">
+            <p className="text-sm leading-relaxed text-[var(--t4)]">
               What the model says on its own, from training data. Confident and uncited. It does not
               know when it is out of date.
             </p>
           ) : loadingN ? (
             <Skeleton />
           ) : (
-            <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-zinc-400">{naive}</p>
+            <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-[var(--t2)]">{naive}</p>
           )}
           {ran && !loadingN ? (
-            <div className="mt-4 text-xs text-zinc-600">no sources · no conflict check</div>
+            <div className="mt-4 text-xs text-[var(--t4)]">no sources · no conflict check</div>
           ) : null}
         </div>
 
@@ -137,13 +137,13 @@ export default function Showdown() {
         <div className="relative bg-emerald-500/[0.02] p-5">
           <div className="mb-3 flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <span className="text-xs font-semibold uppercase tracking-wide text-emerald-300">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[var(--accent-emerald)]">
               Still True
             </span>
-            <span className="text-xs text-zinc-500">grounded in the graph</span>
+            <span className="text-xs text-[var(--t3)]">grounded in the graph</span>
           </div>
           {!ran ? (
-            <p className="text-sm leading-relaxed text-zinc-500">
+            <p className="text-sm leading-relaxed text-[var(--t3)]">
               The same question, answered only from cited claims. It gives the current fact, flags where
               sources disagree and shows its receipts.
             </p>
@@ -151,27 +151,27 @@ export default function Showdown() {
             <Skeleton grounded />
           ) : grounded ? (
             <>
-              <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-zinc-100">
+              <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-[var(--t1)]">
                 {grounded.answer}
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
                 <button
                   onClick={() => speak(grounded.answer)}
                   disabled={speaking}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.03] px-2.5 py-1 text-zinc-300 transition-colors hover:border-white/[0.2] hover:text-white disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--b2)] bg-[var(--s1)] px-2.5 py-1 text-[var(--t2)] transition-colors hover:border-[var(--b2)] hover:text-[var(--t1)] disabled:opacity-50"
                 >
                   <span aria-hidden>{speaking ? '♪' : '▶'}</span>
                   {speaking ? 'Playing…' : 'Listen'}
                 </button>
                 {grounded.checkedConflicts ? (
-                  <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-amber-300 ring-1 ring-inset ring-amber-500/25">
+                  <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[var(--accent-amber)] ring-1 ring-inset ring-amber-500/25">
                     flagged the conflict
                   </span>
                 ) : null}
                 {grounded.readPaths.map((p) => (
                   <span
                     key={p}
-                    className="rounded-full bg-white/[0.04] px-2.5 py-1 font-mono text-zinc-400 ring-1 ring-inset ring-white/[0.06]"
+                    className="rounded-full bg-[var(--s2)] px-2.5 py-1 font-mono text-[var(--t2)] ring-1 ring-inset ring-[var(--b1)]"
                   >
                     {p}
                   </span>
@@ -186,7 +186,7 @@ export default function Showdown() {
 }
 
 function Skeleton({grounded = false}: {grounded?: boolean}) {
-  const bar = grounded ? 'bg-emerald-400/10' : 'bg-white/[0.06]'
+  const bar = grounded ? 'bg-emerald-400/10' : 'bg-[var(--s2)]'
   return (
     <div className="space-y-2.5">
       <div className={`h-3 w-3/4 animate-pulse rounded ${bar}`} />

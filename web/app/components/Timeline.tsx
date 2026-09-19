@@ -30,10 +30,10 @@ export default function Timeline({claims}: {claims: Claim[]}) {
   }, [dated])
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
+    <div className="rounded-2xl border border-[var(--b1)] bg-[var(--s1)] p-6">
       <div className="mb-5 flex items-baseline justify-between">
-        <span className="text-xs uppercase tracking-wider text-zinc-500">the current truth, as of</span>
-        <span className="font-mono text-lg font-semibold text-emerald-300">{fmt(at)}</span>
+        <span className="text-xs uppercase tracking-wider text-[var(--t3)]">the current truth, as of</span>
+        <span className="font-mono text-lg font-semibold text-[var(--accent-emerald)]">{fmt(at)}</span>
       </div>
 
       <input
@@ -45,7 +45,7 @@ export default function Timeline({claims}: {claims: Claim[]}) {
         className="w-full accent-emerald-400"
         aria-label="Scrub through time"
       />
-      <div className="mb-6 mt-1 flex justify-between text-[11px] text-zinc-600">
+      <div className="mb-6 mt-1 flex justify-between text-[11px] text-[var(--t4)]">
         <span>{fmt(min)}</span>
         <span>{fmt(max)}</span>
       </div>
@@ -59,17 +59,17 @@ export default function Timeline({claims}: {claims: Claim[]}) {
           const older = past.slice(1)
           const future = cs.filter((c) => ts(c.currentAsOf) > at).sort((a, b) => ts(a.currentAsOf) - ts(b.currentAsOf))[0]
           return (
-            <div key={topic} className="rounded-xl border border-white/[0.06] bg-white/[0.015] p-4">
-              <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
+            <div key={topic} className="rounded-xl border border-[var(--b1)] bg-[var(--s0)] p-4">
+              <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-[var(--t3)]">
                 {topic}
               </div>
               {active ? (
-                <p className="text-sm leading-relaxed text-zinc-100 transition-colors">{active.statement}</p>
+                <p className="text-sm leading-relaxed text-[var(--t1)] transition-colors">{active.statement}</p>
               ) : future ? (
-                <p className="text-sm italic leading-relaxed text-zinc-600">not established yet at this date</p>
+                <p className="text-sm italic leading-relaxed text-[var(--t4)]">not established yet at this date</p>
               ) : null}
               {older.length ? (
-                <p className="mt-1.5 text-xs text-zinc-600 line-through decoration-zinc-700">
+                <p className="mt-1.5 text-xs text-[var(--t4)] line-through decoration-zinc-700">
                   was: {older[0].statement}
                 </p>
               ) : null}
