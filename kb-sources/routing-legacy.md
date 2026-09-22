@@ -7,8 +7,8 @@ authority: official (historical)
 
 # Routing in Next.js
 
-Routes live in the `pages/` directory. Each file under `pages/` is a route, and a
-default-exported React component renders it. Fetch data for a page with
-`getServerSideProps` (per request) or `getStaticProps` (at build time), and use
+Routes live in the `pages/` directory. Each file under `pages/` is a route
+rendered by its default-exported React component. Fetch data for a page with
+`getServerSideProps` (per request) or `getStaticProps` (at build time). Use
 `getInitialProps` for the older pattern. Shared layout is applied through a custom
 `pages/_app.tsx`.
