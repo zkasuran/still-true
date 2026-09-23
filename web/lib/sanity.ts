@@ -44,5 +44,9 @@ const boardQuery = `{
 }`
 
 export async function getBoard(): Promise<{claims: Claim[]; edges: Edge[]}> {
-  return client.fetch(boardQuery, {}, {cache: 'no-store'})
+  try {
+    return await client.fetch(boardQuery, {}, {cache: 'no-store'})
+  } catch {
+    return {claims: [], edges: []}
+  }
 }
