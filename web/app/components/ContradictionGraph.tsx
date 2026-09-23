@@ -140,7 +140,14 @@ export default function ContradictionGraph({claims, edges}: {claims: Claim[]; ed
             <div className="mt-3 space-y-2 border-t border-[var(--b1)] pt-3">
               {activeEdges.map((e, i) => {
                 const other = e.from?._id === active ? e.to : e.from
-                const dir = e.from?._id === active ? EDGE_LABEL[e.relation] : `is ${e.relation} by`
+                const dir =
+                  e.from?._id === active
+                    ? EDGE_LABEL[e.relation]
+                    : e.relation === 'contradicts'
+                      ? 'is contradicted by'
+                      : e.relation === 'supersedes'
+                        ? 'is superseded by'
+                        : 'is supported by'
                 return (
                   <div key={i} className="text-xs">
                     <span style={{color: EDGE_COLOR[e.relation]}}>{dir}</span>{' '}
