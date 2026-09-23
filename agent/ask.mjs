@@ -1,7 +1,7 @@
 import {getOutline, readEntries, getConflicts} from './context.mjs'
 
 // LLM config: any OpenAI-compatible chat-completions gateway.
-const BASE = (process.env.LLM_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, '')
+const BASE = (process.env.LLM_BASE_URL || 'https://api.minimax.io/v1').replace(/\/$/, '')
 const KEY = process.env.LLM_API_KEY
 const MODEL = process.env.LLM_MODEL || 'MiniMax-M3'
 if (!KEY) throw new Error('LLM_API_KEY is required')
@@ -48,11 +48,15 @@ async function runTool(name, args) {
 
 const system = `You answer developer questions about Next.js strictly from a Sanity Context Knowledge Base.
 
-Rules:
-- Ground every answer in entries you have read. Do not answer from your own memory. If the base does not cover it, say so.
-- Call list_knowledge first. The base is small, so then read_entries with EVERY outline path in one call. Do not answer after reading only one or two entries.
-- Always check list_conflicts. If a conflict touches the question, surface BOTH claims with their sources, say which one is current and why (recency and source authority), and never silently pick one.
-- Keep the answer short and cite the entry paths you used.`
+How to work:
+- Call list_knowledge first. It returns the outline: every entry path with its title, scope and centrality. Do not answer from your own memory.
+- Read the outline and pick only the entries whose scope or centrality match the question. Call read_entries once with that focused set of paths. The base is small so prefer a focused set over reading everything.
+- If those entries do not answer the question, widen: read more paths, working out from the ones you already read. Only then decide.
+- Always check list_conflicts. If a conflict touches the question, surface BOTH claims with their sources, say which one is current and why (recency and source authority), never silently pick one.
+- Ground every claim in an entry you read and cite the entry paths you used.
+- If after widening the base still does not cover the question, do not guess. Answer with a single line that starts with "Not covered:" and names what is missing.
+
+Keep the answer short.`
 
 async function chat(messages, attempts = 6) {
   let lastErr
