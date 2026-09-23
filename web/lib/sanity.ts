@@ -1,4 +1,5 @@
 import {createClient} from 'next-sanity'
+import type {PortableTextBlock} from '@portabletext/react'
 
 export const client = createClient({
   projectId: 'mx12urdz',
@@ -20,7 +21,14 @@ export type Claim = {
   topic?: string
   confidence?: number
   currentAsOf?: string
+  body?: PortableTextBlock[]
   source?: Source
+}
+
+export type ClaimDetail = Claim & {
+  supporting?: Source[]
+  outgoing?: {relation: Edge['relation']; reason?: string; to?: {_id: string; statement: string}}[]
+  incoming?: {relation: Edge['relation']; reason?: string; from?: {_id: string; statement: string}}[]
 }
 
 export type Edge = {
@@ -33,7 +41,7 @@ export type Edge = {
 
 const boardQuery = `{
   "claims": *[_type == "claim"] | order(topic asc, confidence desc){
-    _id, statement, topic, confidence, currentAsOf,
+    _id, statement, topic, confidence, currentAsOf, body,
     "source": primarySource->{title, publisher, authority, url}
   },
   "edges": *[_type == "claimEdge"]{
@@ -48,5 +56,21 @@ export async function getBoard(): Promise<{claims: Claim[]; edges: Edge[]}> {
     return await client.fetch(boardQuery, {}, {cache: 'no-store'})
   } catch {
     return {claims: [], edges: []}
+  }
+}
+
+const claimQuery = `*[_type == "claim" && _id == $id][0]{
+  _id, statement, topic, confidence, currentAsOf, body,
+  "source": primarySource->{title, publisher, authority, url},
+  "supporting": supportingSources[]->{title, url, authority},
+  "outgoing": *[_type == "claimEdge" && from._ref == ^._id]{relation, reason, "to": to->{_id, statement}},
+  "incoming": *[_type == "claimEdge" && to._ref == ^._id]{relation, reason, "from": from->{_id, statement}}
+}`
+
+export async function getClaim(id: string): Promise<ClaimDetail | null> {
+  try {
+    return await client.fetch(claimQuery, {id}, {cache: 'no-store'})
+  } catch {
+    return null
   }
 }

@@ -1,4 +1,5 @@
 import {getBoard, type Claim, type Edge} from '@/lib/sanity'
+import Link from 'next/link'
 import Showdown from './components/Showdown'
 import ContradictionGraph from './components/ContradictionGraph'
 import Timeline from './components/Timeline'
@@ -29,9 +30,12 @@ function ClaimCard({claim, superseded}: {claim: Claim; superseded: boolean}) {
       <div className="flex items-start gap-3">
         <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${superseded ? 'bg-zinc-600' : 'bg-emerald-400'}`} />
         <div className="min-w-0 flex-1">
-          <p className={`text-sm leading-relaxed ${superseded ? 'text-[var(--t3)] line-through decoration-zinc-700' : 'text-[var(--t1)]'}`}>
+          <Link
+            href={`/claim/${claim._id}`}
+            className={`block text-sm leading-relaxed underline-offset-2 hover:underline ${superseded ? 'text-[var(--t3)] line-through decoration-zinc-700' : 'text-[var(--t1)]'}`}
+          >
             {claim.statement}
-          </p>
+          </Link>
           <div className="mt-2.5 flex flex-wrap items-center gap-2 text-xs">
             <span className={`rounded-full px-2 py-0.5 font-medium ring-1 ring-inset ${authorityStyle[auth]}`}>{auth}</span>
             {claim.source?.title ? (
