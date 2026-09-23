@@ -2,6 +2,7 @@
 
 import {useState} from 'react'
 import {sfx} from '../lib/sound'
+import Answer from './Answer'
 
 const SUGGESTIONS = [
   'Does Next.js cache fetch by default?',
@@ -133,7 +134,7 @@ export default function Showdown() {
           ) : loadingN ? (
             <Skeleton />
           ) : (
-            <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-[var(--t2)]">{naive}</p>
+            <Answer text={naive || ''} tone="muted" />
           )}
           {ran && !loadingN ? (
             <div className="mt-4 text-xs text-[var(--t4)]">no sources · no conflict check</div>
@@ -158,9 +159,7 @@ export default function Showdown() {
             <Skeleton grounded />
           ) : grounded ? (
             <>
-              <p className="whitespace-pre-wrap text-[14px] leading-relaxed text-[var(--t1)]">
-                {grounded.answer}
-              </p>
+              <Answer text={grounded.answer} />
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
                 <button
                   onClick={() => speak(grounded.answer)}

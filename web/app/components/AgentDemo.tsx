@@ -2,6 +2,7 @@
 
 import {useEffect, useRef, useState} from 'react'
 import {sfx} from '../lib/sound'
+import Answer from './Answer'
 
 const SUGGESTIONS = [
   'Does Next.js cache fetch by default?',
@@ -120,7 +121,7 @@ export default function AgentDemo({autofocus = false}: {autofocus?: boolean}) {
               <div className="h-3 w-5/6 animate-pulse rounded bg-[var(--s2)]" />
             </div>
           ) : error ? (
-            <div className="rounded-lg border border-red-500/30 bg-red-500/[0.06] p-3 text-sm text-red-300">
+            <div className="rounded-lg border border-red-500/30 bg-red-500/[0.06] p-3 text-sm text-red-700 dark:text-red-300">
               {error}
             </div>
           ) : result ? (
@@ -132,12 +133,12 @@ export default function AgentDemo({autofocus = false}: {autofocus?: boolean}) {
               ) : (
                 <div className="mb-2 truncate text-[13px] text-[var(--t3)]">{q}</div>
               )}
-              <p className="whitespace-pre-wrap text-[15px] leading-relaxed text-[var(--t1)]">
-                {isSample ? result.answer : shown}
+              <div className="relative">
+                <Answer text={isSample ? result.answer : shown} />
                 {!isSample && shown.length < result.answer.length ? (
                   <span className="ml-0.5 inline-block h-4 w-1.5 animate-pulse bg-emerald-400 align-middle" />
                 ) : null}
-              </p>
+              </div>
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
                 <button
                   onClick={() => speak(result.answer)}
